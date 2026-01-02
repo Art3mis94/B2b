@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Payment</title>
+<style>
+body { font-family: Arial, sans-serif; max-width: 600px; margin:auto; padding:2rem; background:#f8f9fa; }
+h1 { text-align:center; margin-bottom:1rem; }
+button { padding:.5rem 1rem; margin:.5rem; border:none; border-radius:.25rem; cursor:pointer; font-size:1rem; }
+button.pay { background:#198754; color:#fff; }
+button.cancel { background:#dc3545; color:#fff; }
+p { line-height:1.6; }
+</style>
+</head>
+<body>
+
+<h1>Complete Your Payment</h1>
+<p id="itemInfo"></p>
+
+<div style="text-align:center;">
+  <button class="pay" onclick="completePayment()">Pay Now</button>
+  <button class="cancel" onclick="cancelPayment()">Cancel</button>
+</div>
+
+<script>
+const session = JSON.parse(localStorage.getItem('paymentSession'));
+if(!session){
+    alert('No active payment session!');
+    window.location.href = 'browse.html';
+} else {
+    document.getElementById('itemInfo').innerHTML = `
+        <strong>${session.itemName}</strong><br>
+        Quantity: ${session.quantity}<br>
+        Price per Unit: £${session.pricePerUnit.toFixed(2)}<br>
+        Total: £${session.totalPrice.toFixed(2)}<br>
+        Delivery: ${session.delivery ? 'Available' : 'Collection only'}
+    `;
+}
+
+function completePayment(){
+    session.status = 'paid';
+    localStorage.setItem('paymentSession', JSON.stringify(session));
+    alert('Payment successful! Funds are held securely until collection/delivery.');
+    window.location.href = 'browse.html';
+}
+
+function cancelPayment(){
+    if(confirm("Cancel this payment? The reserved items will be restored.")){
+        const listings = JSON.parse(localStorage.getItem('listings'));
+        listings[session.itemIndex].quantity += session.quantity;
+        localStorage.setItem('listings', JSON.stringify(listings));
+        localStorage.removeItem('paymentSession');
+        window.location.href = 'browse.html';
+    }
+}
+</script>
+
+</body>
+</html>
