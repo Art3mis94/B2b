@@ -4,11 +4,121 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Browse Listings | B2B Surplus Marketplace</title>
+
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-<!-- STYLES UNCHANGED -->
 <style>
-/* [ styles exactly as you provided — unchanged ] */
+/* ===== YOUR ORIGINAL STYLES (UNCHANGED) ===== */
+:root {
+  --primary:#0d6efd;
+  --success:#198754;
+  --danger:#dc3545;
+  --dark:#212529;
+  --gray:#6c757d;
+  --light:#f8f9fa;
+  --bg:#f0f4f8;
+  --card-bg:#ffffff;
+  --border:#e0e0e0;
+}
+* { box-sizing:border-box; margin:0; padding:0; }
+body {
+  font-family:'Inter',sans-serif;
+  background:var(--bg);
+  color:var(--dark);
+}
+.container { max-width:1400px; margin:auto; padding:0 1rem; }
+
+/* Header */
+header { padding:1.5rem 0; border-bottom:1px solid var(--border); margin-bottom:2rem; }
+.header-top { display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem; }
+.logo { font-size:1.5rem; font-weight:700; color:var(--primary); text-decoration:none; }
+.auth-buttons { display:flex; gap:.75rem; }
+.btn-outline, .btn-filled {
+  padding:.5rem 1rem; border-radius:50px; font-weight:600; text-decoration:none;
+}
+.btn-outline { border:1px solid var(--primary); color:var(--primary); }
+.btn-filled { background:var(--primary); color:#fff; }
+
+.nav-links { display:flex; justify-content:center; gap:2rem; margin-bottom:1.5rem; }
+.nav-links a { text-decoration:none; color:var(--dark); font-weight:500; }
+
+h1 { text-align:center; font-size:2.5rem; margin-bottom:.5rem; }
+.subtitle { text-align:center; color:var(--gray); }
+
+/* Search */
+.search-bar {
+  max-width:700px;
+  margin:2rem auto;
+  background:#fff;
+  padding:.5rem 1rem;
+  border-radius:50px;
+  display:flex;
+  gap:.5rem;
+}
+.search-bar input { flex:1; border:none; outline:none; }
+
+/* Filters */
+.filter-tabs {
+  display:flex;
+  justify-content:center;
+  gap:1rem;
+  margin-bottom:2rem;
+}
+.tab {
+  background:#fff;
+  padding:.75rem 1.5rem;
+  border-radius:50px;
+  cursor:pointer;
+}
+.tab.active { background:var(--primary); color:#fff; }
+
+/* Cards */
+.grid {
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(300px,1fr));
+  gap:1.5rem;
+}
+.card {
+  background:#fff;
+  border-radius:1rem;
+  overflow:hidden;
+  box-shadow:0 4px 16px rgba(0,0,0,.08);
+}
+.card-img { height:200px; overflow:hidden; }
+.card-img img { width:100%; height:100%; object-fit:cover; cursor:pointer; }
+.card-body { padding:1.25rem; }
+.card-title { font-size:1.25rem; font-weight:600; }
+.card-meta { color:var(--gray); font-size:.875rem; }
+.card-price { color:var(--primary); font-size:1.5rem; font-weight:700; }
+
+.card-footer {
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-top:1rem;
+}
+.btn {
+  background:var(--primary);
+  color:#fff;
+  padding:.75rem 1.5rem;
+  border:none;
+  border-radius:50px;
+  cursor:pointer;
+}
+
+/* Footer */
+footer {
+  background:var(--dark);
+  color:#fff;
+  padding:2rem 0;
+  margin-top:3rem;
+}
+.footer-content {
+  display:flex;
+  justify-content:space-between;
+  flex-wrap:wrap;
+}
+.footer-links a { color:#ccc; text-decoration:none; margin-right:1rem; }
 </style>
 </head>
 
@@ -27,143 +137,99 @@
   <nav class="nav-links">
     <a href="dashboard.html">List Your Surplus</a>
     <a href="how-it-works.html">How It Works</a>
-    <a href="resources.html">Resources</a>
     <a href="contact-dispute-accordion.html">Contact Us</a>
   </nav>
 
   <h1>Browse Listings</h1>
-  <p class="subtitle">Find high-quality surplus inventory from trusted suppliers.</p>
+  <p class="subtitle">Find surplus inventory from trusted suppliers.</p>
 </header>
 
 <div class="search-bar">
-  <input type="text" id="searchInput" placeholder="Search for products or services">
-  <button onclick="renderListings()">🔍</button>
+  <input id="searchInput" placeholder="Search listings">
 </div>
 
 <div class="filter-tabs">
-  <div class="tab active" onclick="filterCategory('', event)">All Categories</div>
-  <div class="tab" onclick="filterCategory('Healthcare', event)">Healthcare</div>
-  <div class="tab" onclick="filterCategory('Manufacturing', event)">Industrial</div>
-  <div class="tab" onclick="filterCategory('Retail', event)">Apparel</div>
+  <div class="tab active" onclick="setFilter('')">All</div>
+  <div class="tab" onclick="setFilter('Healthcare')">Healthcare</div>
+  <div class="tab" onclick="setFilter('Manufacturing')">Industrial</div>
+  <div class="tab" onclick="setFilter('Retail')">Retail</div>
 </div>
 
-<div class="grid" id="listingsContainer"></div>
-</div>
-
-<div class="lightbox" id="lightbox">
-  <span class="close" onclick="closeLightbox()">×</span>
-  <button class="nav prev" onclick="prevImg()">‹</button>
-  <img id="lightboxImg">
-  <button class="nav next" onclick="nextImg()">›</button>
+<div class="grid" id="listings"></div>
 </div>
 
 <footer>
   <div class="container footer-content">
     <div class="footer-links">
-      <a href="#">About Us</a>
+      <a href="#">About</a>
       <a href="#">Terms</a>
       <a href="#">Privacy</a>
-      <a href="#">FAQ</a>
     </div>
-    <div class="copyright">
-      © 2025 B2B Surplus. All rights reserved.
-    </div>
+    <div>© 2025 B2B Surplus</div>
   </div>
 </footer>
 
-<!-- ===== FIREBASE (PUBLIC READ) ===== -->
-<script type="module">
-import { initializeApp } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js";
-import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore.js";
+<!-- ================= FIREBASE ================= -->
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
 
+<script>
+/* 🔥 YOUR FIREBASE CONFIG */
 const firebaseConfig = {
-  apiKey: "AIzaSyCrbAWZAiUuIfhwrPC0xa8WPTsVGJWDy1c",
-  authDomain: "business2business-67222.firebaseapp.com",
-  projectId: "business2business-67222",
-  storageBucket: "business2business-67222.firebasestorage.app",
-  messagingSenderId: "913722719592",
-  appId: "1:913722719592:web:9d54f832b102e4d842aadd"
+  apiKey: "YOUR_KEY",
+  authDomain: "YOUR_DOMAIN",
+  projectId: "YOUR_PROJECT_ID"
 };
 
-const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
+firebase.initializeApp(firebaseConfig);
+const db = firebase.firestore();
 
 let allListings = [];
 let currentFilter = '';
-let currentImages = [];
-let currentImgIdx = 0;
 
-const placeholders = [
-  'dental-chair.jpeg',
-  'industrial-mixer.jpeg',
-  'hospital-bed.jpeg',
-  'refrigerator.jpeg',
-  'clothing-rack.jpeg',
-  'wooden-shelving.jpeg'
-];
+db.collection("listings").onSnapshot(snapshot => {
+  allListings = snapshot.docs.map(doc => doc.data());
+  render();
+});
 
-function placeholder(i){ return placeholders[i % placeholders.length]; }
-
-async function loadListings(){
-  const snap = await getDocs(collection(db, "listings"));
-  allListings = snap.docs.map(d => ({ id: d.id, ...d.data() }));
-  renderListings();
-}
-
-window.renderListings = function(){
-  const search = searchInput.value.toLowerCase();
-  const filtered = allListings.filter(l =>
-    (!currentFilter || l.sector === currentFilter) &&
-    l.name.toLowerCase().includes(search)
-  );
-
-  listingsContainer.innerHTML = '';
-
-  filtered.forEach((item,i)=>{
-    const img = item.images?.[0] || placeholder(i);
-    listingsContainer.innerHTML += `
-      <div class="card">
-        <div class="card-img">
-          <img src="${img}" onclick="openLightbox(${i})">
-        </div>
-        <div class="card-body">
-          <div class="card-title">${item.name}</div>
-          <div class="card-meta">${item.sector} • ${item.condition} • Qty: ${item.quantity}</div>
-          <div class="card-price">£${item.price}</div>
-          <div class="card-footer">
-            <span class="badge">Ultrasave</span>
-            <button class="btn">View Details</button>
-          </div>
-        </div>
-      </div>`;
-  });
-};
-
-window.filterCategory = function(cat, e){
+function setFilter(cat){
   currentFilter = cat;
   document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
-  e.target.classList.add('active');
-  renderListings();
-};
+  event.target.classList.add('active');
+  render();
+}
 
-window.openLightbox = function(i){
-  currentImages = allListings[i].images || [placeholder(i)];
-  currentImgIdx = 0;
-  lightboxImg.src = currentImages[0];
-  lightbox.classList.add('active');
-};
+document.getElementById('searchInput').addEventListener('input', render);
 
-window.closeLightbox = () => lightbox.classList.remove('active');
-window.prevImg = () => {
-  currentImgIdx = (currentImgIdx-1+currentImages.length)%currentImages.length;
-  lightboxImg.src = currentImages[currentImgIdx];
-};
-window.nextImg = () => {
-  currentImgIdx = (currentImgIdx+1)%currentImages.length;
-  lightboxImg.src = currentImages[currentImgIdx];
-};
+function render(){
+  const search = document.getElementById('searchInput').value.toLowerCase();
+  const grid = document.getElementById('listings');
+  grid.innerHTML = '';
 
-loadListings();
+  allListings
+    .filter(l =>
+      (!currentFilter || l.sector === currentFilter) &&
+      (l.name.toLowerCase().includes(search))
+    )
+    .forEach(l => {
+      grid.innerHTML += `
+        <div class="card">
+          <div class="card-img">
+            <img src="${l.images?.[0] || 'https://via.placeholder.com/300x200'}">
+          </div>
+          <div class="card-body">
+            <div class="card-title">${l.name}</div>
+            <div class="card-meta">${l.sector} • ${l.condition}</div>
+            <div class="card-price">£${l.price}</div>
+            <div class="card-footer">
+              <span>${l.quantity} units</span>
+              <button class="btn">View</button>
+            </div>
+          </div>
+        </div>
+      `;
+    });
+}
 </script>
 
 </body>
