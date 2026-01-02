@@ -4,11 +4,10 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Sign In | B2B Surplus Marketplace</title>
-
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
 <style>
-/* --- YOUR ORIGINAL STYLES (UNCHANGED) --- */
+/* ===== YOUR ORIGINAL STYLES (UNCHANGED) ===== */
 :root {
   --primary:#0d6efd;
   --success:#198754;
@@ -25,28 +24,75 @@ body {
   font-family:'Inter',sans-serif;
   background:var(--bg);
   color:var(--dark);
-  min-height:100vh;
+  line-height:1.6;
   display:flex;
-  align-items:center;
+  min-height:100vh;
+  flex-direction:column;
 }
 .container { max-width:1400px; margin:auto; padding:0 1rem; width:100%; }
 
-header { padding:1.5rem 0; border-bottom:1px solid var(--border); margin-bottom:2rem; }
-.header-top { display:flex; justify-content:space-between; align-items:center; }
-.logo { font-size:1.5rem; font-weight:700; color:var(--primary); text-decoration:none; }
+/* Header */
+header {
+  padding:1.5rem 0;
+  border-bottom:1px solid var(--border);
+  margin-bottom:2rem;
+}
+.header-top {
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+.logo {
+  font-size:1.5rem;
+  font-weight:700;
+  color:var(--primary);
+  text-decoration:none;
+}
+.auth-buttons {
+  display:flex;
+  gap:.75rem;
+}
+.btn-filled {
+  padding:.5rem 1rem;
+  background:var(--primary);
+  color:#fff;
+  border:none;
+  border-radius:50px;
+  font-weight:600;
+  text-decoration:none;
+}
+.nav-links {
+  display:flex;
+  justify-content:center;
+  gap:2rem;
+  margin:1.5rem 0;
+}
+.nav-links a {
+  color:var(--dark);
+  text-decoration:none;
+  font-weight:500;
+}
 
+/* Auth Form */
 .auth-container {
   max-width:420px;
   margin:auto;
-  background:#fff;
+  background:var(--card-bg);
   padding:2.5rem;
   border-radius:1rem;
   box-shadow:0 8px 24px rgba(0,0,0,.1);
 }
-
-.auth-title { font-size:1.75rem; font-weight:700; text-align:center; margin-bottom:.5rem; }
-.auth-subtitle { text-align:center; color:var(--gray); margin-bottom:2rem; }
-
+.auth-title {
+  font-size:1.75rem;
+  font-weight:700;
+  text-align:center;
+  margin-bottom:.5rem;
+}
+.auth-subtitle {
+  text-align:center;
+  color:var(--gray);
+  margin-bottom:2rem;
+}
 .form-group { margin-bottom:1.25rem; }
 label { display:block; margin-bottom:.5rem; font-weight:500; }
 input {
@@ -55,7 +101,6 @@ input {
   border:1px solid var(--border);
   border-radius:50px;
 }
-
 .btn-primary {
   width:100%;
   padding:.875rem;
@@ -66,7 +111,6 @@ input {
   font-weight:600;
   cursor:pointer;
 }
-
 .divider {
   text-align:center;
   margin:1.5rem 0;
@@ -83,10 +127,9 @@ input {
   background:var(--border);
 }
 .divider span {
-  background:#fff;
+  background:var(--card-bg);
   padding:0 1rem;
 }
-
 .btn-google {
   width:100%;
   padding:.75rem;
@@ -100,12 +143,46 @@ input {
   gap:.75rem;
   cursor:pointer;
 }
-
+.auth-footer {
+  text-align:center;
+  font-size:.875rem;
+  color:var(--gray);
+}
+.auth-footer a {
+  color:var(--primary);
+  text-decoration:none;
+  font-weight:500;
+}
 .error {
   color:var(--danger);
   font-size:.9rem;
   text-align:center;
   margin-top:1rem;
+}
+
+/* Footer */
+footer {
+  background:var(--dark);
+  color:#fff;
+  padding:2rem 0;
+  margin-top:auto;
+}
+.footer-content {
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  flex-wrap:wrap;
+  gap:1rem;
+}
+.footer-links a {
+  color:#ccc;
+  text-decoration:none;
+  margin:0 .5rem;
+  font-size:.875rem;
+}
+.copyright {
+  font-size:.875rem;
+  color:#aaa;
 }
 </style>
 </head>
@@ -113,86 +190,119 @@ input {
 <body>
 
 <div class="container">
-  <div class="auth-container">
-    <h2 class="auth-title">Welcome Back</h2>
-    <p class="auth-subtitle">Sign in to your account</p>
-
-    <form id="signinForm">
-      <div class="form-group">
-        <label>Email</label>
-        <input type="email" id="email" required>
-      </div>
-
-      <div class="form-group">
-        <label>Password</label>
-        <input type="password" id="password" required>
-      </div>
-
-      <button type="submit" class="btn-primary">Sign In</button>
-    </form>
-
-    <div class="divider"><span>or</span></div>
-
-    <button id="googleSignIn" class="btn-google">
-      Continue with Google
-    </button>
-
-    <div id="errorMessage" class="error"></div>
+<header>
+  <div class="header-top">
+    <a href="browse.html" class="logo">B2B Surplus</a>
+    <div class="auth-buttons">
+      <a href="signup.html" class="btn-filled">Join Free</a>
+    </div>
   </div>
+
+  <nav class="nav-links">
+    <a href="dashboard.html">List Your Surplus</a>
+    <a href="how-it-works.html">How It Works</a>
+    <a href="resources.html">Resources</a>
+    <a href="contact-dispute-accordion.html">Contact Us</a>
+  </nav>
+</header>
+
+<div class="auth-container">
+  <h2 class="auth-title">Welcome Back</h2>
+  <p class="auth-subtitle">Sign in to access your surplus listings and purchases.</p>
+
+  <form id="signinForm">
+    <div class="form-group">
+      <label>Email Address</label>
+      <input type="email" id="email" required>
+    </div>
+
+    <div class="form-group">
+      <label>Password</label>
+      <input type="password" id="password" required>
+    </div>
+
+    <button type="submit" class="btn-primary">Sign In</button>
+  </form>
+
+  <div class="divider"><span>or</span></div>
+
+  <button id="googleSignIn" class="btn-google">
+    Continue with Google
+  </button>
+
+  <div id="errorMessage" class="error"></div>
+
+  <p class="auth-footer">
+    Don't have an account? <a href="signup.html">Join Free</a>
+  </p>
+</div>
 </div>
 
-<!-- FIREBASE AUTH ONLY -->
+<footer>
+  <div class="container footer-content">
+    <div class="footer-links">
+      <a href="#">About Us</a>
+      <a href="#">Terms of Service</a>
+      <a href="#">Privacy Policy</a>
+      <a href="#">FAQ</a>
+    </div>
+    <div class="copyright">
+      © 2025 B2B Surplus. All rights reserved.
+    </div>
+  </div>
+</footer>
+
+<!-- ===== FIREBASE AUTH ONLY ===== -->
 <script type="module">
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js";
-  import {
-    getAuth,
-    signInWithEmailAndPassword,
-    GoogleAuthProvider,
-    signInWithPopup
-  } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-auth.js";
+import { initializeApp } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js";
+import {
+  getAuth,
+  signInWithEmailAndPassword,
+  GoogleAuthProvider,
+  signInWithPopup
+} from "https://www.gstatic.com/firebasejs/9.23.0/firebase-auth.js";
 
-  const firebaseConfig = {
-    apiKey: "AIzaSyCrbAWZAiUuIfhwrPC0xa8WPTsVGJWDy1c",
-    authDomain: "business2business-67222.firebaseapp.com",
-    projectId: "business2business-67222",
-    storageBucket: "business2business-67222.firebasestorage.app",
-    messagingSenderId: "913722719592",
-    appId: "1:913722719592:web:9d54f832b102e4d842aadd",
-    measurementId: "G-BDWSNQPKSX"
-  };
+const firebaseConfig = {
+  apiKey: "AIzaSyCrbAWZAiUuIfhwrPC0xa8WPTsVGJWDy1c",
+  authDomain: "business2business-67222.firebaseapp.com",
+  projectId: "business2business-67222",
+  storageBucket: "business2business-67222.firebasestorage.app",
+  messagingSenderId: "913722719592",
+  appId: "1:913722719592:web:9d54f832b102e4d842aadd",
+  measurementId: "G-BDWSNQPKSX"
+};
 
-  const app = initializeApp(firebaseConfig);
-  const auth = getAuth(app);
-  const errorBox = document.getElementById("errorMessage");
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const errorBox = document.getElementById("errorMessage");
 
-  // EMAIL + PASSWORD SIGN IN
-  document.getElementById("signinForm").addEventListener("submit", async (e) => {
-    e.preventDefault();
-    errorBox.textContent = "";
+// Email + Password
+document.getElementById("signinForm").addEventListener("submit", async (e) => {
+  e.preventDefault();
+  errorBox.textContent = "";
 
-    const email = email.value;
-    const password = document.getElementById("password").value;
+  try {
+    await signInWithEmailAndPassword(
+      auth,
+      email.value,
+      password.value
+    );
+    window.location.href = "dashboard.html";
+  } catch (err) {
+    errorBox.textContent = err.message;
+  }
+});
 
-    try {
-      await signInWithEmailAndPassword(auth, email, password);
-      window.location.href = "dashboard.html";
-    } catch (error) {
-      errorBox.textContent = error.message;
-    }
-  });
-
-  // GOOGLE SIGN IN
-  document.getElementById("googleSignIn").addEventListener("click", async () => {
-    errorBox.textContent = "";
-    const provider = new GoogleAuthProvider();
-
-    try {
-      await signInWithPopup(auth, provider);
-      window.location.href = "dashboard.html";
-    } catch (error) {
-      errorBox.textContent = error.message;
-    }
-  });
+// Google Sign In
+document.getElementById("googleSignIn").addEventListener("click", async () => {
+  errorBox.textContent = "";
+  try {
+    await signInWithPopup(auth, new GoogleAuthProvider());
+    window.location.href = "dashboard.html";
+  } catch (err) {
+    errorBox.textContent = err.message;
+  }
+});
 </script>
 
 </body>
