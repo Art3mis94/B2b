@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Browse Listings | B2B Surplus Marketplace</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --primary:#0d6efd;
+    --success:#198754;
+    --danger:#dc3545;
+    --dark:#212529;
+    --gray:#6c757d;
+    --light:#f8f9fa;
+    --bg:#f0f4f8;
+    --card-bg:#ffffff;
+    --border:#e0e0e0;
+  }
+  * { box-sizing:border-box; margin:0; padding:0; }
+  body {
+    font-family:'Inter',sans-serif;
+    background:var(--bg);
+    color:var(--dark);
+    line-height:1.6;
+    padding:0;
+    margin:0;
+  }
+  .container { max-width:1400px; margin:auto; padding:0 1rem; }
+
+  /* Header */
+  header {
+    padding:1.5rem 0;
+    border-bottom:1px solid var(--border);
+    margin-bottom:2rem;
+  }
+  .header-top {
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:1rem;
+  }
+  .logo {
+    font-size:1.5rem;
+    font-weight:700;
+    color:var(--primary);
+    text-decoration:none;
+  }
+  .auth-buttons {
+    display:flex;
+    gap:.75rem;
+  }
+  .btn-outline {
+    padding:.5rem 1rem;
+    border:1px solid var(--primary);
+    color:var(--primary);
+    background:transparent;
+    border-radius:50px;
+    font-weight:600;
+    text-decoration:none;
+    transition:all .2s;
+  }
+  .btn-outline:hover { background:var(--primary); color:#fff; }
+  .btn-filled {
+    padding:.5rem 1rem;
+    background:var(--primary);
+    color:#fff;
+    border:none;
+    border-radius:50px;
+    font-weight:600;
+    text-decoration:none;
+    transition:all .2s;
+  }
+  .btn-filled:hover { background:#0b5ed7; }
+
+  .nav-links {
+    display:flex;
+    justify-content:center;
+    gap:2rem;
+    flex-wrap:wrap;
+    margin-bottom:1.5rem;
+  }
+  .nav-links a {
+    color:var(--dark);
+    text-decoration:none;
+    font-weight:500;
+    transition:color .2s;
+  }
+  .nav-links a:hover { color:var(--primary); }
+
+  h1 {
+    text-align:center;
+    font-size:2.5rem;
+    font-weight:700;
+    margin-bottom:.5rem;
+  }
+  .subtitle {
+    text-align:center;
+    font-size:1rem;
+    color:var(--gray);
+    max-width:600px;
+    margin:auto;
+  }
+
+  /* Search Bar */
+  .search-bar {
+    display:flex;
+    gap:.5rem;
+    max-width:700px;
+    margin:2rem auto;
+    background:#fff;
+    border-radius:50px;
+    padding:.5rem 1rem;
+    box-shadow:0 4px 12px rgba(0,0,0,.08);
+    align-items:center;
+  }
+  .search-bar input {
+    flex:1;
+    border:none;
+    outline:none;
+    font-size:1rem;
+    padding:.5rem;
+  }
+  .search-bar button {
+    background:var(--primary);
+    color:#fff;
+    border:none;
+    width:40px;
+    height:40px;
+    border-radius:50%;
+    cursor:pointer;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:1.2rem;
+  }
+
+  /* Filter Tabs */
+  .filter-tabs {
+    display:flex;
+    justify-content:center;
+    gap:1rem;
+    margin-bottom:2rem;
+    flex-wrap:wrap;
+  }
+  .tab {
+    padding:.75rem 1.5rem;
+    background:#fff;
+    border-radius:50px;
+    font-weight:500;
+    cursor:pointer;
+    transition:all .2s;
+    box-shadow:0 2px 8px rgba(0,0,0,.05);
+  }
+  .tab.active, .tab:hover {
+    background:var(--primary);
+    color:#fff;
+  }
+
+  /* Grid */
+  .grid {
+    display:grid;
+    gap:1.5rem;
+    grid-template-columns:repeat(auto-fill,minmax(300px,1fr));
+    padding-bottom:3rem;
+  }
+  .card {
+    background:var(--card-bg);
+    border-radius:1rem;
+    overflow:hidden;
+    box-shadow:0 4px 16px rgba(0,0,0,.08);
+    transition:transform .3s, box-shadow .3s;
+  }
+  .card:hover {
+    transform:translateY(-8px);
+    box-shadow:0 12px 24px rgba(0,0,0,.12);
+  }
+  .card-img {
+    height:200px;
+    overflow:hidden;
+  }
+  .card-img img {
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    transition:transform .4s;
+  }
+  .card:hover .card-img img { transform:scale(1.05); }
+  .card-body {
+    padding:1.25rem;
+  }
+  .card-title {
+    font-size:1.25rem;
+    font-weight:600;
+    margin-bottom:.5rem;
+    color:var(--dark);
+  }
+  .card-meta {
+    font-size:.875rem;
+    color:var(--gray);
+    margin-bottom:.75rem;
+  }
+  .card-price {
+    font-size:1.5rem;
+    font-weight:700;
+    color:var(--primary);
+    margin-bottom:.75rem;
+  }
+  .card-footer {
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-top:1rem;
+  }
+  .badge {
+    background:var(--light);
+    color:var(--gray);
+    padding:.25rem .75rem;
+    border-radius:50px;
+    font-size:.75rem;
+    font-weight:500;
+  }
+  .btn {
+    padding:.75rem 1.5rem;
+    background:var(--primary);
+    color:#fff;
+    border:none;
+    border-radius:50px;
+    font-weight:600;
+    cursor:pointer;
+    transition:all .2s;
+  }
+  .btn:hover { background:#0b5ed7; transform:translateY(-2px); }
+
+  /* Lightbox */
+  .lightbox {
+    display:none;
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,.95);
+    align-items:center;
+    justify-content:center;
+    z-index:1000;
+    padding:2rem;
+  }
+  .lightbox.active { display:flex; }
+  .lightbox img {
+    max-width:95vw;
+    max-height:95vh;
+    object-fit:contain;
+    border-radius:1rem;
+  }
+  .close {
+    position:absolute;
+    top:2rem;
+    right:2rem;
+    color:#fff;
+    font-size:2.5rem;
+    cursor:pointer;
+    background:rgba(255,255,255,.1);
+    width:50px;
+    height:50px;
+    border-radius:50%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+  }
+  .lightbox .nav {
+    position:absolute;
+    top:50%;
+    transform:translateY(-50%);
+    background:rgba(255,255,255,.1);
+    color:#fff;
+    border:none;
+    width:50px;
+    height:50px;
+    border-radius:50%;
+    font-size:1.5rem;
+    cursor:pointer;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+  }
+  .lightbox .prev { left:2rem; }
+  .lightbox .next { right:2rem; }
+
+  /* Footer */
+  footer {
+    background:var(--dark);
+    color:#fff;
+    padding:2rem 0;
+    margin-top:3rem;
+  }
+  .footer-content {
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    flex-wrap:wrap;
+    gap:1rem;
+  }
+  .footer-links a {
+    color:#ccc;
+    text-decoration:none;
+    margin:0 .5rem;
+    font-size:.875rem;
+  }
+  .footer-links a:hover { color:#fff; }
+  .copyright {
+    font-size:.875rem;
+    color:#aaa;
+  }
+
+  @media (max-width:768px) {
+    .header-top { flex-direction:column; gap:1rem; }
+    .nav-links { gap:1rem; }
+    h1 { font-size:2rem; }
+    .search-bar { max-width:100%; }
+    .filter-tabs { gap:.5rem; }
+    .tab { padding:.5rem 1rem; font-size:.875rem; }
+    .footer-content { flex-direction:column; text-align:center; }
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+  <header>
+    <div class="header-top">
+      <a href="#" class="logo">B2B Surplus</a>
+      <div class="auth-buttons">
+        <a href="signin.html" class="btn-outline">Sign In</a>
+        <a href="signup.html" class="btn-filled">Join Free</a>
+      </div>
+    </div>
+
+    <nav class="nav-links">
+      <a href="dashboard.html">List Your Surplus</a>
+      <a href="how-it-works.html">How It Works</a>
+      <a href="resources.html">Resources</a>
+      <a href="contact-dispute-accordion.html">Contact Us</a>
+    </nav>
+
+    <h1>Browse Listings</h1>
+    <p class="subtitle">Find high-quality surplus inventory from trusted suppliers.</p>
+  </header>
+
+  <div class="search-bar">
+    <input type="text" placeholder="Search for products or services" id="searchInput">
+    <button onclick="applySearch()">🔍</button>
+  </div>
+
+  <div class="filter-tabs">
+    <div class="tab active" onclick="filterCategory('')">All Categories</div>
+    <div class="tab" onclick="filterCategory('Healthcare')">Healthcare</div>
+    <div class="tab" onclick="filterCategory('Manufacturing')">Industrial</div>
+    <div class="tab" onclick="filterCategory('Retail')">Apparel</div>
+    <div class="tab">More ▼</div>
+  </div>
+
+  <div class="grid" id="listingsContainer"></div>
+</div>
+
+<div class="lightbox" id="lightbox">
+  <span class="close" onclick="closeLightbox()">×</span>
+  <button class="nav prev" onclick="prevImg()">‹</button>
+  <img id="lightboxImg" src="" alt="">
+  <button class="nav next" onclick="nextImg()">›</button>
+</div>
+
+<footer>
+  <div class="container footer-content">
+    <div class="footer-links">
+      <a href="#">About Us</a>
+      <a href="#">Terms of Service</a>
+      <a href="#">Privacy Policy</a>
+      <a href="#">FAQ</a>
+    </div>
+    <div class="copyright">© 2025 B2B Surplus. All rights reserved.</div>
+  </div>
+</footer>
+
+<script>
+function getListings(){ return JSON.parse(localStorage.getItem('listings'))||[]; }
+function saveListings(l){ localStorage.setItem('listings',JSON.stringify(l)); }
+
+let currentImages=[], currentImgIdx=0, currentFilter='';
+
+const placeholderImages = [
+  'dental-chair.jpeg',
+  'industrial-mixer.jpeg',
+  'hospital-bed.jpeg',
+  'refrigerator.jpeg',
+  'clothing-rack.jpeg',
+  'wooden-shelving.jpeg'
+];
+
+function getPlaceholder(i) {
+  return placeholderImages[i % placeholderImages.length];
+}
+
+function renderListings(){
+  const listings = getListings();
+  const search = document.getElementById('searchInput').value.toLowerCase();
+  const filtered = listings.filter(l => 
+    (!currentFilter || l.sector === currentFilter) &&
+    (l.name.toLowerCase().includes(search) || l.tags?.toLowerCase().includes(search))
+  );
+
+  const cont = document.getElementById('listingsContainer');
+  cont.innerHTML = '';
+
+  filtered.forEach((item,i)=>{
+    const imgSrc = item.images?.[0] || getPlaceholder(i);
+    const div = document.createElement('div');
+    div.className = 'card';
+    div.innerHTML = `
+      <div class="card-img">
+        <img src="${imgSrc}" onclick="openLightbox(${i},0)" alt="${item.name}">
+      </div>
+      <div class="card-body">
+        <div class="card-title">${item.name}</div>
+        <div class="card-meta">${item.sector} • ${item.condition} • Qty: ${item.quantity}</div>
+        <div class="card-price">£${item.price}</div>
+        <div class="card-footer">
+          <span class="badge">Ultrasave</span>
+          <button class="btn" onclick="purchaseUnits(${i})" ${item.quantity===0?'disabled':''}>
+            View Details
+          </button>
+        </div>
+      </div>
+    `;
+    cont.appendChild(div);
+  });
+}
+
+function filterCategory(cat){
+  currentFilter = cat;
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  event.target.classList.add('active');
+  renderListings();
+}
+
+function applySearch(){
+  renderListings();
+}
+
+function purchaseUnits(i){
+  const listings = getListings();
+  const item = listings[i];
+  if(item.quantity === 0) return;
+
+  const qty = 1;
+  item.quantity -= qty;
+  saveListings(listings);
+  renderListings();
+
+  const paymentSession = {
+    itemIndex: i,
+    itemName: item.name,
+    quantity: qty,
+    pricePerUnit: item.price,
+    totalPrice: item.price * qty,
+    contact: item.contact,
+    status: 'pending'
+  };
+  localStorage.setItem('paymentSession', JSON.stringify(paymentSession));
+  window.location.href = 'payment.html';
+}
+
+function openLightbox(listIdx,imgIdx){
+  currentImages = getListings()[listIdx].images || [getPlaceholder(listIdx)];
+  currentImgIdx = imgIdx;
+  document.getElementById('lightboxImg').src = currentImages[currentImgIdx];
+  document.getElementById('lightbox').classList.add('active');
+}
+function closeLightbox(){ document.getElementById('lightbox').classList.remove('active'); }
+function prevImg(){ currentImgIdx = (currentImgIdx-1+currentImages.length)%currentImages.length; document.getElementById('lightboxImg').src = currentImages[currentImgIdx]; }
+function nextImg(){ currentImgIdx = (currentImgIdx+1)%currentImages.length; document.getElementById('lightboxImg').src = currentImages[currentImgIdx]; }
+
+renderListings();
+window.addEventListener('storage', renderListings);
+</script>
+</body>
+</html>
