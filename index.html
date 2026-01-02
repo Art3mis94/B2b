@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>B2B Surplus Marketplace</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --primary:#0d6efd;
+    --success:#198754;
+    --danger:#dc3545;
+    --dark:#212529;
+    --gray:#6c757d;
+    --light:#f8f9fa;
+    --bg:#f0f4f8;
+    --card-bg:#ffffff;
+    --border:#e0e0e0;
+    --focus:#0a58ca;
+  }
+  * { box-sizing:border-box; margin:0; padding:0; }
+  body {
+    font-family:'Inter',sans-serif;
+    background:var(--bg);
+    color:var(--dark);
+    line-height:1.6;
+    padding:0;
+    margin:0;
+  }
+  .container { max-width:1400px; margin:auto; padding:0 1rem; }
+
+  /* Skip link */
+  .skip-link {
+    position:absolute;
+    top:-40px;
+    left:6px;
+    background:var(--primary);
+    color:#fff;
+    padding:.5rem 1rem;
+    border-radius:0 0 .5rem .5rem;
+    z-index:1000;
+    text-decoration:none;
+    font-weight:600;
+  }
+  .skip-link:focus { top:0; }
+
+  /* Header */
+  header {
+    padding:2rem 0;
+    text-align:center;
+  }
+  .logo {
+    font-size:2rem;
+    font-weight:700;
+    color:var(--primary);
+    text-decoration:none;
+    margin-bottom:.5rem;
+    display:inline-block;
+  }
+  .hero-title {
+    font-size:2.75rem;
+    font-weight:700;
+    margin-bottom:.5rem;
+  }
+  .hero-subtitle {
+    font-size:1.125rem;
+    color:var(--gray);
+    max-width:700px;
+    margin:auto;
+    margin-bottom:2rem;
+  }
+  .hero-actions {
+    display:flex;
+    gap:1rem;
+    justify-content:center;
+    flex-wrap:wrap;
+    margin-bottom:3rem;
+  }
+  .btn-outline, .btn-filled {
+    padding:.75rem 1.75rem;
+    border-radius:50px;
+    font-weight:600;
+    text-decoration:none;
+    transition:all .2s;
+    min-height:48px;
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    font-size:1rem;
+  }
+  .btn-outline {
+    border:2px solid var(--primary);
+    color:var(--primary);
+    background:transparent;
+  }
+  .btn-outline:hover, .btn-outline:focus { background:var(--primary); color:#fff; outline:none; }
+  .btn-filled {
+    background:var(--primary);
+    color:#fff;
+    border:none;
+  }
+  .btn-filled:hover, .btn-filled:focus { background:#0b5ed7; outline:none; }
+  .btn-outline:focus-visible, .btn-filled:focus-visible {
+    outline:3px solid var(--focus);
+    outline-offset:2px;
+  }
+
+  .nav-links {
+    display:flex;
+    justify-content:center;
+    gap:2rem;
+    flex-wrap:wrap;
+    margin-bottom:3rem;
+  }
+  .nav-links a {
+    color:var(--dark);
+    text-decoration:none;
+    font-weight:500;
+    transition:color .2s;
+    padding:.25rem 0;
+  }
+  .nav-links a:hover, .nav-links a:focus { color:var(--primary); outline:none; }
+  .nav-links a:focus-visible {
+    outline:2px solid var(--primary);
+    outline-offset:2px;
+  }
+
+  /* Main Content */
+  main {
+    padding:2rem 0;
+  }
+  .section {
+    margin-bottom:4rem;
+  }
+  .section-title {
+    font-size:1.75rem;
+    font-weight:700;
+    text-align:center;
+    margin-bottom:1.5rem;
+    position:relative;
+  }
+  .section-title::after {
+    content:'';
+    position:absolute;
+    bottom:-.5rem;
+    left:50%;
+    transform:translateX(-50%);
+    width:80px;
+    height:4px;
+    background:var(--primary);
+    border-radius:2px;
+  }
+
+  .features {
+    display:grid;
+    gap:2rem;
+    grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
+    margin-bottom:3rem;
+  }
+  .feature-card {
+    background:var(--card-bg);
+    padding:2rem;
+    border-radius:1rem;
+    box-shadow:0 4px 16px rgba(0,0,0,.08);
+    text-align:center;
+  }
+  .feature-icon {
+    width:70px;
+    height:70px;
+    background:var(--light);
+    border-radius:50%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    margin:0 auto 1.5rem;
+    font-size:2rem;
+  }
+  .feature-title {
+    font-size:1.25rem;
+    font-weight:600;
+    margin-bottom:.75rem;
+  }
+  .feature-desc {
+    color:var(--gray);
+  }
+
+  .secure-box {
+    background:var(--card-bg);
+    padding:2rem;
+    border-left:6px solid var(--primary);
+    border-radius:1rem;
+    box-shadow:0 4px 16px rgba(0,0,0,.08);
+    max-width:900px;
+    margin:3rem auto;
+  }
+  .secure-title {
+    font-size:1.5rem;
+    font-weight:700;
+    margin-bottom:1rem;
+    display:flex;
+    align-items:center;
+    gap:.75rem;
+  }
+  .secure-title::before {
+    content:'Lock';
+    font-size:1.75rem;
+  }
+
+  .benefits {
+    display:grid;
+    gap:1.5rem;
+    grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+    max-width:900px;
+    margin:auto;
+  }
+  .benefit-item {
+    display:flex;
+    gap:1rem;
+    align-items:start;
+  }
+  .benefit-icon {
+    color:var(--primary);
+    font-size:1.5rem;
+    flex-shrink:0;
+  }
+  .benefit-text {
+    color:var(--gray);
+  }
+
+  /* CTA */
+  .cta {
+    text-align:center;
+    padding:3rem 1rem;
+    background:var(--light);
+    border-radius:1rem;
+    margin:4rem auto;
+    max-width:900px;
+  }
+  .cta h2 {
+    font-size:2rem;
+    font-weight:700;
+    margin-bottom:1rem;
+  }
+  .cta p {
+    color:var(--gray);
+    max-width:600px;
+    margin:auto;
+    margin-bottom:2rem;
+  }
+
+  /* Footer */
+  footer {
+    background:var(--dark);
+    color:#fff;
+    padding:2rem 0;
+    margin-top:4rem;
+  }
+  .footer-content {
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    flex-wrap:wrap;
+    gap:1rem;
+  }
+  .footer-links a {
+    color:#ccc;
+    text-decoration:none;
+    margin:0 .5rem;
+    font-size:.875rem;
+    padding:.25rem 0;
+  }
+  .footer-links a:hover, .footer-links a:focus { color:#fff; outline:none; }
+  .footer-links a:focus-visible {
+    outline:2px solid #fff;
+    outline-offset:2px;
+  }
+  .copyright {
+    font-size:.875rem;
+    color:#aaa;
+  }
+
+  @media (max-width:768px) {
+    .hero-title { font-size:2.25rem; }
+    .hero-actions { flex-direction:column; align-items:center; }
+    .nav-links { gap:1rem; }
+    .features, .benefits { grid-template-columns:1fr; }
+    .secure-box, .cta { margin:2rem auto; padding:1.5rem; }
+    .footer-content { flex-direction:column; text-align:center; }
+  }
+</style>
+</head>
+<body>
+
+<a href="#main-content" class="skip-link">Skip to main content</a>
+
+<div class="container">
+  <header>
+    <a href="index.html" class="logo" aria-label="B2B Surplus Home">B2B Surplus</a>
+    <h1 class="hero-title">Welcome to B2B Surplus</h1>
+    <p class="hero-subtitle">
+      A trusted marketplace for businesses to buy and sell surplus, second-hand, and refurbished equipment across regulated industries.
+    </p>
+
+    <div class="hero-actions">
+      <a href="dashboard.html" class="btn-filled">Add a Listing</a>
+      <a href="browse.html" class="btn-outline">Browse Listings</a>
+    </div>
+
+    <nav class="nav-links" aria-label="Main navigation">
+      <a href="how-it-works.html">How It Works</a>
+      <a href="resources.html">Resources</a>
+      <a href="contact-dispute-accordion.html">Contact Us</a>
+      <a href="faq.html">FAQ</a>
+    </nav>
+  </header>
+
+  <main id="main-content">
+    <section class="section" aria-labelledby="how-title">
+      <h2 id="how-title" class="section-title">How It Works</h2>
+      <div class="features">
+        <div class="feature-card">
+          <div class="feature-icon" aria-hidden="true">Upload</div>
+          <h3 class="feature-title">List Your Surplus</h3>
+          <p class="feature-desc">Upload items with photos, condition, specs, and fulfillment options (collection, seller delivery, or platform logistics).</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon" aria-hidden="true">Search</div>
+          <h3 class="feature-title">Browse & Connect</h3>
+          <p class="feature-desc">Buyers search by sector, tags, condition, and price. Message sellers directly to negotiate.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon" aria-hidden="true">Payment</div>
+          <h3 class="feature-title">Secure Purchase</h3>
+          <p class="feature-desc">Complete payment via secure checkout. Funds held in escrow until delivery confirmed.</p>
+        </div>
+      </div>
+    </section>
+
+    <div class="secure-box">
+      <h3 class="secure-title">Secure Transaction Handling</h3>
+      <p>
+        All payments are held in a secure business escrow account until the item is collected or delivered. 
+        Once both parties confirm receipt, funds are released automatically to the seller.
+      </p>
+      <p>
+        This ensures full transparency, protection, and confidence for buyers and sellers.
+      </p>
+    </div>
+
+    <section class="section" aria-labelledby="why-title">
+      <h2 id="why-title" class="section-title">Why Choose B2B Surplus</h2>
+      <div class="benefits">
+        <div class="benefit-item">
+          <div class="benefit-icon" aria-hidden="true">Check Circle</div>
+          <div class="benefit-text"><strong>Transparent Fees:</strong> Free listing. Only 5% platform fee on successful sale.</div>
+        </div>
+        <div class="benefit-item">
+          <div class="benefit-icon" aria-hidden="true">Truck</div>
+          <div class="benefit-text"><strong>Flexible Delivery:</strong> Collection, your logistics, or our trusted partners.</div>
+        </div>
+        <div class="benefit-item">
+          <div class="benefit-icon" aria-hidden="true">Shield</div>
+          <div class="benefit-text"><strong>Secure & Protected:</strong> Escrow payments and fair dispute mediation.</div>
+        </div>
+        <div class="benefit-item">
+          <div class="benefit-icon" aria-hidden="true">Target</div>
+          <div class="benefit-text"><strong>Built for SMBs:</strong> Simple, fast, and purpose-made for surplus trading.</div>
+        </div>
+      </div>
+    </section>
+
+    <div class="cta">
+      <h2>Join Thousands of Businesses</h2>
+      <p>Reduce waste, recover value, and find deals on quality surplus assets — all in one secure platform.</p>
+      <a href="signup.html" class="btn-filled">Get Started Free</a>
+    </div>
+  </main>
+</div>
+
+<footer>
+  <div class="container footer-content">
+    <div class="footer-links">
+      <a href="#">About Us</a>
+      <a href="#">Terms of Service</a>
+      <a href="#">Privacy Policy</a>
+      <a href="faq.html">FAQ</a>
+    </div>
+    <div class="copyright">© 2025 B2B Surplus. All rights reserved.</div>
+  </div>
+</footer>
+</body>
+</html>
