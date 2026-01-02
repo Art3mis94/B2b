@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sign Up | B2B Surplus Marketplace</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --primary:#0d6efd;
+    --success:#198754;
+    --danger:#dc3545;
+    --warning:#ffc107;
+    --dark:#212529;
+    --gray:#6c757d;
+    --light:#f8f9fa;
+    --bg:#f0f4f8;
+    --card-bg:#ffffff;
+    --border:#e0e0e0;
+  }
+  * { box-sizing:border-box; margin:0; padding:0; }
+  body {
+    font-family:'Inter',sans-serif;
+    background:var(--bg);
+    color:var(--dark);
+    line-height:1.6;
+    padding:0;
+    margin:0;
+    display:flex;
+    min-height:100vh;
+    align-items:center;
+  }
+  .container { max-width:1400px; margin:auto; padding:0 1rem; width:100%; }
+
+  /* Header */
+  header {
+    padding:1.5rem 0;
+    border-bottom:1px solid var(--border);
+    margin-bottom:2rem;
+  }
+  .header-top {
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+  }
+  .logo {
+    font-size:1.5rem;
+    font-weight:700;
+    color:var(--primary);
+    text-decoration:none;
+  }
+  .auth-buttons {
+    display:flex;
+    gap:.75rem;
+  }
+  .btn-outline {
+    padding:.5rem 1rem;
+    border:1px solid var(--primary);
+    color:var(--primary);
+    background:transparent;
+    border-radius:50px;
+    font-weight:600;
+    text-decoration:none;
+    transition:all .2s;
+  }
+  .btn-outline:hover { background:var(--primary); color:#fff; }
+  .btn-filled {
+    padding:.5rem 1rem;
+    background:var(--primary);
+    color:#fff;
+    border:none;
+    border-radius:50px;
+    font-weight:600;
+    text-decoration:none;
+    transition:all .2s;
+  }
+  .btn-filled:hover { background:#0b5ed7; }
+
+  .nav-links {
+    display:flex;
+    justify-content:center;
+    gap:2rem;
+    flex-wrap:wrap;
+    margin:1.5rem 0;
+  }
+  .nav-links a {
+    color:var(--dark);
+    text-decoration:none;
+    font-weight:500;
+    transition:color .2s;
+  }
+  .nav-links a:hover { color:var(--primary); }
+
+  /* Sign Up Form */
+  .auth-container {
+    max-width:420px;
+    margin:auto;
+    background:var(--card-bg);
+    padding:2.5rem;
+    border-radius:1rem;
+    box-shadow:0 8px 24px rgba(0,0,0,.1);
+  }
+  .auth-title {
+    font-size:1.75rem;
+    font-weight:700;
+    text-align:center;
+    margin-bottom:.5rem;
+  }
+  .auth-subtitle {
+    text-align:center;
+    color:var(--gray);
+    margin-bottom:2rem;
+    font-size:.95rem;
+  }
+  .form-group {
+    margin-bottom:1.25rem;
+    position:relative;
+  }
+  label {
+    display:block;
+    margin-bottom:.5rem;
+    font-weight:500;
+    color:var(--dark);
+  }
+  .input-wrapper {
+    position:relative;
+  }
+  input {
+    width:100%;
+    padding:.75rem 1rem;
+    border:1px solid var(--border);
+    border-radius:50px;
+    font-size:1rem;
+    transition:border .2s;
+    padding-right:3rem;
+  }
+  input:focus {
+    outline:none;
+    border-color:var(--primary);
+    box-shadow:0 0 0 3px rgba(13,110,253,.15);
+  }
+  .toggle-eye {
+    position:absolute;
+    right:1rem;
+    top:50%;
+    transform:translateY(-50%);
+    background:none;
+    border:none;
+    color:var(--gray);
+    cursor:pointer;
+    font-size:1.1rem;
+    padding:0;
+  }
+  .toggle-eye:hover { color:var(--dark); }
+
+  .password-strength {
+    margin-top:.75rem;
+  }
+  .strength-meter {
+    display:flex;
+    gap:.25rem;
+    margin-bottom:.5rem;
+  }
+  .strength-bar {
+    flex:1;
+    height:6px;
+    background:#e9ecef;
+    border-radius:3px;
+    transition:background .3s;
+  }
+  .strength-details {
+    font-size:.8rem;
+    color:var(--gray);
+    line-height:1.4;
+  }
+  .strength-details ul {
+    list-style:none;
+    padding:0;
+  }
+  .strength-details li {
+    display:flex;
+    align-items:center;
+    gap:.5rem;
+  }
+  .strength-details .check {
+    color:var(--success);
+    font-weight:bold;
+  }
+  .strength-details .cross {
+    color:var(--danger);
+    font-weight:bold;
+  }
+  .strength-text {
+    font-size:.875rem;
+    font-weight:500;
+    margin-top:.5rem;
+  }
+
+  .checkbox {
+    display:flex;
+    align-items:center;
+    gap:.5rem;
+    font-size:.875rem;
+    margin-bottom:1.5rem;
+  }
+  .checkbox input { width:auto; }
+  .checkbox a {
+    color:var(--primary);
+    text-decoration:none;
+  }
+  .checkbox a:hover { text-decoration:underline; }
+  .btn-primary {
+    width:100%;
+    padding:.875rem;
+    background:var(--primary);
+    color:#fff;
+    border:none;
+    border-radius:50px;
+    font-weight:600;
+    font-size:1rem;
+    cursor:pointer;
+    transition:all .2s;
+  }
+  .btn-primary:hover {
+    background:#0b5ed7;
+    transform:translateY(-2px);
+  }
+  .divider {
+    text-align:center;
+    margin:1.5rem 0;
+    position:relative;
+    color:var(--gray);
+    font-size:.875rem;
+  }
+  .divider::before {
+    content:'';
+    position:absolute;
+    top:50%;
+    left:0;
+    right:0;
+    height:1px;
+    background:var(--border);
+  }
+  .divider span {
+    background:var(--card-bg);
+    padding:0 1rem;
+  }
+  .btn-google {
+    width:100%;
+    padding:.75rem;
+    background:#fff;
+    border:1px solid var(--border);
+    border-radius:50px;
+    font-weight:500;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:.75rem;
+    cursor:pointer;
+    transition:all .2s;
+    margin-bottom:1.5rem;
+  }
+  .btn-google:hover { border-color:var(--primary); }
+  .auth-footer {
+    text-align:center;
+    font-size:.875rem;
+    color:var(--gray);
+  }
+  .auth-footer a {
+    color:var(--primary);
+    text-decoration:none;
+    font-weight:500;
+  }
+  .auth-footer a:hover { text-decoration:underline; }
+
+  /* Footer */
+  footer {
+    background:var(--dark);
+    color:#fff;
+    padding:2rem 0;
+    margin-top:4rem;
+  }
+  .footer-content {
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    flex-wrap:wrap;
+    gap:1rem;
+  }
+  .footer-links a {
+    color:#ccc;
+    text-decoration:none;
+    margin:0 .5rem;
+    font-size:.875rem;
+  }
+  .footer-links a:hover { color:#fff; }
+  .copyright {
+    font-size:.875rem;
+    color:#aaa;
+  }
+
+  @media (max-width:768px) {
+    .auth-container { padding:2rem; margin:1rem; }
+    .header-top { flex-direction:column; gap:1rem; }
+    .nav-links { gap:1rem; }
+    .footer-content { flex-direction:column; text-align:center; }
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+  <header>
+    <div class="header-top">
+      <a href="browse.html" class="logo">B2B Surplus</a>
+      <div class="auth-buttons">
+        <a href="signin.html" class="btn-outline">Sign In</a>
+      </div>
+    </div>
+
+    <nav class="nav-links">
+      <a href="dashboard.html">List Your Surplus</a>
+      <a href="how-it-works.html">How It Works</a>
+      <a href="resources.html">Resources</a>
+      <a href="contact-dispute-accordion.html">Contact Us</a>
+    </nav>
+  </header>
+
+  <div class="auth-container">
+    <h2 class="auth-title">Join Free</h2>
+    <p class="auth-subtitle">Create your account and start listing or buying surplus inventory.</p>
+
+    <form id="signupForm">
+      <div class="form-group">
+        <label for="name">Full Name</label>
+        <input type="text" id="name" placeholder="John Doe" required>
+      </div>
+
+      <div class="form-group">
+        <label for="email">Email Address</label>
+        <input type="email" id="email" placeholder="you@company.com" required>
+      </div>
+
+      <div class="form-group">
+        <label for="password">Password</label>
+        <div class="input-wrapper">
+          <input type="password" id="password" placeholder="Create a strong password" required>
+          <button type="button" class="toggle-eye" id="togglePassword">Eye</button>
+        </div>
+        <div class="password-strength">
+          <div class="strength-meter">
+            <div class="strength-bar" id="bar1"></div>
+            <div class="strength-bar" id="bar2"></div>
+            <div class="strength-bar" id="bar3"></div>
+            <div class="strength-bar" id="bar4"></div>
+          </div>
+          <div class="strength-text" id="strengthText">Enter a password</div>
+          <div class="strength-details" id="strengthDetails">
+            <ul>
+              <li><span id="lenCheck" class="cross">Cross</span> At least 8 characters</li>
+              <li><span id="upperCheck" class="cross">Cross</span> One uppercase letter</li>
+              <li><span id="lowerCheck" class="cross">Cross</span> One lowercase letter</li>
+              <li><span id="numCheck" class="cross">Cross</span> One number or symbol</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="confirm">Confirm Password</label>
+        <div class="input-wrapper">
+          <input type="password" id="confirm" placeholder="Re-enter your password" required>
+          <button type="button" class="toggle-eye" id="toggleConfirm">Eye</button>
+        </div>
+      </div>
+
+      <div class="checkbox">
+        <input type="checkbox" id="terms" required>
+        <label for="terms">I agree to the <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a></label>
+      </div>
+
+      <button type="submit" class="btn-primary">Create Account</button>
+    </form>
+
+    <div class="divider"><span>or</span></div>
+
+    <button class="btn-google">
+      <svg width="20" height="20" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/><path fill="#EA4335" d="M12 6.75c1.62 0 3.06.56 4.21 1.65l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
+      Sign up with Google
+    </button>
+
+    <p class="auth-footer">
+      Already have an account? <a href="signin.html">Sign In</a>
+    </p>
+  </div>
+</div>
+
+<footer>
+  <div class="container footer-content">
+    <div class="footer-links">
+      <a href="#">About Us</a>
+      <a href="#">Terms of Service</a>
+      <a href="#">Privacy Policy</a>
+      <a href="#">FAQ</a>
+    </div>
+    <div class="copyright">© 2025 B2B Surplus. All rights reserved.</div>
+  </div>
+</footer>
+
+<script>
+const passwordInput = document.getElementById('password');
+const confirmInput = document.getElementById('confirm');
+const togglePassword = document.getElementById('togglePassword');
+const toggleConfirm = document.getElementById('toggleConfirm');
+const bars = [document.getElementById('bar1'), document.getElementById('bar2'), document.getElementById('bar3'), document.getElementById('bar4')];
+const strengthText = document.getElementById('strengthText');
+const lenCheck = document.getElementById('lenCheck');
+const upperCheck = document.getElementById('upperCheck');
+const lowerCheck = document.getElementById('lowerCheck');
+const numCheck = document.getElementById('numCheck');
+
+togglePassword.addEventListener('click', () => {
+  const type = passwordInput.type === 'password' ? 'text' : 'password';
+  passwordInput.type = type;
+  togglePassword.textContent = type === 'password' ? 'Eye' : 'Eye Closed';
+});
+
+toggleConfirm.addEventListener('click', () => {
+  const type = confirmInput.type === 'password' ? 'text' : 'password';
+  confirmInput.type = type;
+  toggleConfirm.textContent = type === 'password' ? 'Eye' : 'Eye Closed';
+});
+
+passwordInput.addEventListener('input', updateStrength);
+
+function updateStrength() {
+  const val = passwordInput.value;
+  let score = 0;
+  const messages = ['Enter a password', 'Too weak', 'Weak', 'Fair', 'Good', 'Strong'];
+  const colors = ['', '#dc3545', '#dc3545', '#ffc107', '#198754', '#198754'];
+
+  // Reset
+  lenCheck.className = 'cross'; lenCheck.textContent = 'Cross';
+  upperCheck.className = 'cross'; upperCheck.textContent = 'Cross';
+  lowerCheck.className = 'cross'; lowerCheck.textContent = 'Cross';
+  numCheck.className = 'cross'; numCheck.textContent = 'Cross';
+
+  if (val.length >= 8) { score++; lenCheck.className = 'check'; lenCheck.textContent = 'Check'; }
+  if (/[A-Z]/.test(val)) { score++; upperCheck.className = 'check'; upperCheck.textContent = 'Check'; }
+  if (/[a-z]/.test(val)) { score++; lowerCheck.className = 'check'; lowerCheck.textContent = 'Check'; }
+  if (/[0-9!@#$%^&*]/.test(val)) { score++; numCheck.className = 'check'; numCheck.textContent = 'Check'; }
+
+  // Extra points for length >12 or special chars
+  if (val.length > 12) score++;
+  if (/[!@#$%^&*]/.test(val)) score++;
+
+  score = Math.min(score, 5); // Max 5
+
+  bars.forEach((bar, i) => {
+    bar.style.background = i < score ? colors[score] : '#e9ecef';
+  });
+  strengthText.textContent = messages[score];
+  strengthText.style.color = colors[score];
+}
+
+document.getElementById('signupForm').addEventListener('submit', function(e) {
+  e.preventDefault();
+  const name = document.getElementById('name').value.trim();
+  const email = document.getElementById('email').value;
+  const password = document.getElementById('password').value;
+  const confirm = document.getElementById('confirm').value;
+  
+  if (password !== confirm) {
+    alert('Passwords do not match.');
+    return;
+  }
+  if (password.length < 8) {
+    alert('Password must be at least 8 characters.');
+    return;
+  }
+  const checks = [
+    password.length >= 8,
+    /[A-Z]/.test(password),
+    /[a-z]/.test(password),
+    /[0-9!@#$%^&*]/.test(password)
+  ];
+  if (checks.filter(c => c).length < 3) {
+    alert('Password must include uppercase, lowercase, and number/symbol.');
+    return;
+  }
+  
+  localStorage.setItem('userSession', JSON.stringify({ name, email, loggedIn: true }));
+  alert('Account created successfully!');
+  window.location.href = 'dashboard.html';
+});
+</script>
+</body>
+</html>
