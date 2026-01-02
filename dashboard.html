@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Seller Dashboard | B2B Surplus Marketplace</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --primary:#0d6efd;
+    --success:#198754;
+    --danger:#dc3545;
+    --dark:#212529;
+    --gray:#6c757d;
+    --light:#f8f9fa;
+    --bg:#f0f4f8;
+    --card-bg:#ffffff;
+    --border:#e0e0e0;
+  }
+  * { box-sizing:border-box; margin:0; padding:0; }
+  body {
+    font-family:'Inter',sans-serif;
+    background:var(--bg);
+    color:var(--dark);
+    line-height:1.6;
+    padding:0;
+    margin:0;
+  }
+  .container { max-width:1400px; margin:auto; padding:0 1rem; }
+
+  /* Header */
+  header {
+    padding:1.5rem 0;
+    border-bottom:1px solid var(--border);
+    margin-bottom:2rem;
+  }
+  .header-top {
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:1rem;
+  }
+  .logo {
+    font-size:1.5rem;
+    font-weight:700;
+    color:var(--primary);
+    text-decoration:none;
+  }
+  .auth-buttons {
+    display:flex;
+    gap:.75rem;
+  }
+  .btn-outline {
+    padding:.5rem 1rem;
+    border:1px solid var(--primary);
+    color:var(--primary);
+    background:transparent;
+    border-radius:50px;
+    font-weight:600;
+    text-decoration:none;
+    transition:all .2s;
+  }
+  .btn-outline:hover { background:var(--primary); color:#fff; }
+  .btn-filled {
+    padding:.5rem 1rem;
+    background:var(--primary);
+    color:#fff;
+    border:none;
+    border-radius:50px;
+    font-weight:600;
+    text-decoration:none;
+    transition:all .2s;
+  }
+  .btn-filled:hover { background:#0b5ed7; }
+
+  .nav-links {
+    display:flex;
+    justify-content:center;
+    gap:2rem;
+    flex-wrap:wrap;
+    margin-bottom:1.5rem;
+  }
+  .nav-links a {
+    color:var(--dark);
+    text-decoration:none;
+    font-weight:500;
+    transition:color .2s;
+  }
+  .nav-links a:hover { color:var(--primary); }
+
+  h1 {
+    text-align:center;
+    font-size:2.5rem;
+    font-weight:700;
+    margin-bottom:.5rem;
+  }
+  .subtitle {
+    text-align:center;
+    font-size:1rem;
+    color:var(--gray);
+    max-width:600px;
+    margin:auto;
+  }
+
+  /* Dashboard Content */
+  .dashboard-header {
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:2rem;
+    flex-wrap:wrap;
+    gap:1rem;
+  }
+  .btn-add {
+    background:var(--success);
+    color:#fff;
+    padding:.75rem 1.5rem;
+    border:none;
+    border-radius:50px;
+    font-weight:600;
+    cursor:pointer;
+    transition:all .2s;
+  }
+  .btn-add:hover { background:#157347; transform:translateY(-2px); }
+
+  .form-card {
+    background:var(--card-bg);
+    padding:2rem;
+    border-radius:1rem;
+    box-shadow:0 4px 16px rgba(0,0,0,.08);
+    margin-bottom:2rem;
+  }
+  .form-grid {
+    display:grid;
+    gap:1.25rem;
+    grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+  }
+  .form-group {
+    display:flex;
+    flex-direction:column;
+  }
+  label {
+    font-weight:500;
+    margin-bottom:.5rem;
+    color:var(--dark);
+  }
+  input, select, textarea {
+    padding:.75rem 1rem;
+    border:1px solid var(--border);
+    border-radius:50px;
+    font-size:1rem;
+    transition:border .2s;
+  }
+  input:focus, select:focus, textarea:focus {
+    outline:none;
+    border-color:var(--primary);
+    box-shadow:0 0 0 3px rgba(13,110,253,.15);
+  }
+  .checkbox-group {
+    display:flex;
+    flex-wrap:wrap;
+    gap:1rem;
+    margin-top:.5rem;
+  }
+  .checkbox-item {
+    display:flex;
+    align-items:center;
+    gap:.5rem;
+    font-size:.875rem;
+  }
+  .checkbox-item input { width:auto; }
+  .fee-display {
+    background:var(--light);
+    padding:.75rem 1rem;
+    border-radius:50px;
+    font-weight:600;
+    text-align:center;
+    margin-top:1rem;
+  }
+  .form-actions {
+    display:flex;
+    gap:1rem;
+    margin-top:1.5rem;
+  }
+  .btn-cancel {
+    background:#6c757d;
+    color:#fff;
+  }
+  .btn-cancel:hover { background:#5a6268; }
+
+  /* Listings */
+  .listings-grid {
+    display:grid;
+    gap:1.5rem;
+    grid-template-columns:repeat(auto-fill,minmax(320px,1fr));
+  }
+  .listing-card {
+    background:var(--card-bg);
+    border-radius:1rem;
+    overflow:hidden;
+    box-shadow:0 4px 16px rgba(0,0,0,.08);
+    transition:transform .3s;
+  }
+  .listing-card:hover { transform:translateY(-4px); }
+  .listing-img {
+    height:180px;
+    overflow:hidden;
+  }
+  .listing-img img {
+    width:100%;
+    height:100%;
+    object-fit:cover;
+  }
+  .listing-body {
+    padding:1.25rem;
+  }
+  .listing-title {
+    font-size:1.25rem;
+    font-weight:600;
+    margin-bottom:.5rem;
+  }
+  .listing-meta {
+    font-size:.875rem;
+    color:var(--gray);
+    margin-bottom:.75rem;
+  }
+  .listing-fee {
+    font-weight:600;
+    color:var(--primary);
+    margin-bottom:.75rem;
+  }
+  .listing-fulfilment {
+    display:flex;
+    gap:.5rem;
+    flex-wrap:wrap;
+    margin-bottom:.75rem;
+  }
+  .badge {
+    background:var(--light);
+    color:var(--gray);
+    padding:.25rem .75rem;
+    border-radius:50px;
+    font-size:.75rem;
+  }
+  .listing-actions {
+    display:flex;
+    gap:.75rem;
+  }
+  .btn-edit {
+    background:#ffc107;
+    color:#212529;
+  }
+  .btn-edit:hover { background:#e0a800; }
+  .btn-delete {
+    background:var(--danger);
+    color:#fff;
+  }
+  .btn-delete:hover { background:#c82333; }
+
+  .hidden { display:none; }
+
+  @media (max-width:768px) {
+    .dashboard-header { flex-direction:column; }
+    .form-grid { grid-template-columns:1fr; }
+    .form-actions { flex-direction:column; }
+    .listings-grid { grid-template-columns:1fr; }
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+  <header>
+    <div class="header-top">
+      <a href="browse.html" class="logo">B2B Surplus</a>
+      <div class="auth-buttons">
+        <a href="signin.html" class="btn-outline">Sign Out</a>
+      </div>
+    </div>
+
+    <nav class="nav-links">
+      <a href="browse.html">Browse Listings</a>
+      <a href="admin.html">Admin</a>
+      <a href="contact-dispute-accordion.html">Contact Us</a>
+    </nav>
+
+    <h1>Seller Dashboard</h1>
+    <p class="subtitle">Manage your surplus inventory listings.</p>
+  </header>
+
+  <div class="dashboard-header">
+    <h2>Your Listings</h2>
+    <button id="toggleFormBtn" class="btn-add">Add New Listing</button>
+  </div>
+
+  <form id="listingForm" class="form-card hidden">
+    <input type="hidden" id="editIndex" value="">
+    <div class="form-grid">
+      <div class="form-group">
+        <label>Item Name</label>
+        <input type="text" id="name" required>
+      </div>
+      <div class="form-group">
+        <label>Sector</label>
+        <select id="sector">
+          <option>Healthcare</option>
+          <option>Manufacturing</option>
+          <option>Retail</option>
+          <option>Hospitality</option>
+          <option>Other</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Condition</label>
+        <select id="condition">
+          <option>New</option>
+          <option>Used - Like New</option>
+          <option>Used - Good</option>
+          <option>Used - Fair</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Price (£)</label>
+        <input type="number" id="price" step="0.01" required>
+      </div>
+      <div class="form-group">
+        <label>Quantity</label>
+        <input type="number" id="quantity" min="1" value="1" required>
+      </div>
+      <div class="form-group">
+        <label>Tags</label>
+        <input type="text" id="tags" placeholder="e.g. dental, mixer, bed">
+      </div>
+      <div class="form-group">
+        <label>Contact Info</label>
+        <input type="text" id="contact" required>
+      </div>
+      <div class="form-group">
+        <label>Images</label>
+        <input type="file" id="images" accept="image/*" multiple>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label>Fulfilment Options</label>
+      <div class="checkbox-group">
+        <div class="checkbox-item">
+          <input type="checkbox" id="collection">
+          <label for="collection">Collection Available</label>
+        </div>
+        <div class="checkbox-item">
+          <input type="checkbox" id="sellerDelivery">
+          <label for="sellerDelivery">Seller Delivery Available</label>
+        </div>
+        <div class="checkbox-item">
+          <input type="checkbox" id="platformDelivery">
+          <label for="platformDelivery">Platform Delivery Available</label>
+        </div>
+      </div>
+    </div>
+
+    <div class="fee-display" id="feeDisplay">Listing fee: £0.00</div>
+
+    <div class="form-actions">
+      <button type="submit" class="btn-filled">Save Listing</button>
+      <button type="button" id="cancelBtn" class="btn-filled btn-cancel">Cancel</button>
+    </div>
+  </form>
+
+  <div class="listings-grid" id="listingsContainer"></div>
+</div>
+
+<footer style="background:var(--dark);color:#fff;padding:2rem 0;margin-top:4rem;">
+  <div class="container" style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem;">
+    <div style="display:flex;gap:1rem;">
+      <a href="#" style="color:#ccc;text-decoration:none;font-size:.875rem;">About Us</a>
+      <a href="#" style="color:#ccc;text-decoration:none;font-size:.875rem;">Terms of Service</a>
+      <a href="#" style="color:#ccc;text-decoration:none;font-size:.875rem;">Privacy Policy</a>
+      <a href="#" style="color:#ccc;text-decoration:none;font-size:.875rem;">FAQ</a>
+    </div>
+    <div style="font-size:.875rem;color:#aaa;">© 2025 B2B Surplus. All rights reserved.</div>
+  </div>
+</footer>
+
+<script>
+const form = document.getElementById('listingForm');
+const toggleBtn = document.getElementById('toggleFormBtn');
+const cancelBtn = document.getElementById('cancelBtn');
+const feeDisplay = document.getElementById('feeDisplay');
+let editingIndex = null;
+
+function getListings() { 
+  return JSON.parse(localStorage.getItem('listings') || '[]'); 
+}
+function saveListings(l) { 
+  localStorage.setItem('listings', JSON.stringify(l)); 
+  renderListings(); 
+}
+
+function calcFee(price) {
+  const flatLimit = 100;
+  const percent = 0.05;
+  return price <= flatLimit ? 5 : (price * percent).toFixed(2);
+}
+
+function renderListings() {
+  const listings = getListings();
+  const cont = document.getElementById('listingsContainer');
+  cont.innerHTML = '';
+  listings.forEach((l, i) => {
+    const fee = calcFee(l.price);
+    const imgSrc = l.images?.[0] || 'https://via.placeholder.com/300x180?text=No+Image';
+    const div = document.createElement('div');
+    div.className = 'listing-card';
+    div.innerHTML = `
+      <div class="listing-img">
+        <img src="${imgSrc}" alt="${l.name}">
+      </div>
+      <div class="listing-body">
+        <div class="listing-title">${l.name}</div>
+        <div class="listing-meta">${l.sector} • ${l.condition} • Qty: ${l.quantity}</div>
+        <div class="listing-fee">£${l.price} | Fee: £${fee}</div>
+        <div class="listing-fulfilment">
+          ${l.fulfilment?.collection ? '<span class="badge">Collection</span>' : ''}
+          ${l.fulfilment?.sellerDelivery ? '<span class="badge">Seller Delivery</span>' : ''}
+          ${l.fulfilment?.platformDelivery ? '<span class="badge">Platform Delivery</span>' : ''}
+        </div>
+        <div class="listing-actions">
+          <button class="btn-filled btn-edit" onclick="editListing(${i})">Edit</button>
+          <button class="btn-filled btn-delete" onclick="deleteListing(${i})">Delete</button>
+        </div>
+      </div>
+    `;
+    cont.appendChild(div);
+  });
+}
+
+toggleBtn.onclick = () => form.classList.toggle('hidden');
+
+cancelBtn.onclick = () => {
+  form.reset();
+  form.classList.add('hidden');
+  editingIndex = null;
+  document.getElementById('editIndex').value = '';
+  document.getElementById('images').value = '';
+  feeDisplay.textContent = 'Listing fee: £0.00';
+};
+
+document.getElementById('price').addEventListener('input', e => {
+  const price = parseFloat(e.target.value) || 0;
+  feeDisplay.textContent = `Listing fee: £${calcFee(price)}`;
+});
+
+form.addEventListener('submit', e => {
+  e.preventDefault();
+  const listings = getListings();
+  const files = document.getElementById('images').files;
+  const newImages = [];
+
+  const collectData = () => {
+    const data = {
+      name: document.getElementById('name').value,
+      sector: document.getElementById('sector').value,
+      condition: document.getElementById('condition').value,
+      price: parseFloat(document.getElementById('price').value),
+      quantity: parseInt(document.getElementById('quantity').value),
+      tags: document.getElementById('tags').value,
+      contact: document.getElementById('contact').value,
+      images: editingIndex !== null ? listings[editingIndex].images || [] : [],
+      fulfilment: {
+        collection: document.getElementById('collection').checked,
+        sellerDelivery: document.getElementById('sellerDelivery').checked,
+        platformDelivery: document.getElementById('platformDelivery').checked
+      }
+    };
+    data.images.push(...newImages);
+    return data;
+  };
+
+  if (files.length === 0) {
+    const data = collectData();
+    if (editingIndex !== null) {
+      listings[editingIndex] = data;
+    } else {
+      listings.push(data);
+    }
+    saveListings(listings);
+    form.reset();
+    form.classList.add('hidden');
+    editingIndex = null;
+    return;
+  }
+
+  let loaded = 0;
+  for (const file of files) {
+    const reader = new FileReader();
+    reader.onload = () => {
+      newImages.push(reader.result);
+      loaded++;
+      if (loaded === files.length) {
+        const data = collectData();
+        if (editingIndex !== null) {
+          listings[editingIndex] = data;
+        } else {
+          listings.push(data);
+        }
+        saveListings(listings);
+        form.reset();
+        form.classList.add('hidden');
+        editingIndex = null;
+      }
+    };
+    reader.readAsDataURL(file);
+  }
+});
+
+window.editListing = function(i) {
+  const l = getListings()[i];
+  editingIndex = i;
+  form.classList.remove('hidden');
+  document.getElementById('editIndex').value = i;
+  document.getElementById('name').value = l.name;
+  document.getElementById('sector').value = l.sector;
+  document.getElementById('condition').value = l.condition;
+  document.getElementById('price').value = l.price;
+  document.getElementById('quantity').value = l.quantity;
+  document.getElementById('tags').value = l.tags || '';
+  document.getElementById('contact').value = l.contact;
+  document.getElementById('collection').checked = l.fulfilment?.collection || false;
+  document.getElementById('sellerDelivery').checked = l.fulfilment?.sellerDelivery || false;
+  document.getElementById('platformDelivery').checked = l.fulfilment?.platformDelivery || false;
+  feeDisplay.textContent = `Listing fee: £${calcFee(l.price)}`;
+};
+
+window.deleteListing = function(i) {
+  if (confirm('Delete this listing?')) {
+    const listings = getListings();
+    listings.splice(i, 1);
+    saveListings(listings);
+  }
+};
+
+renderListings();
+</script>
+</body>
+</html>
